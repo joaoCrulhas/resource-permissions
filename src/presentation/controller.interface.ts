@@ -6,7 +6,7 @@ import { HttpResponse } from './http';
  * @template T - The type of the input request.
  * @template R - The type of the response body.
  */
-export interface IController<T = unknown, R = unknown> {
+export interface IController<T = never, R = unknown> {
   /**
    * Handles the incoming request and returns an HTTP response.
    *

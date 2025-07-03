@@ -9,7 +9,8 @@
     "start:dev": "nodemon",
     "lint": "npx eslint .",
     "prisma:migrate:dev": "npx prisma migrate dev",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest run --watch",
     "test:coverage": "vitest --coverage"
   },
   "keywords": [],
