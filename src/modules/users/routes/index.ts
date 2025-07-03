@@ -6,6 +6,7 @@ import { createUserValidatorFactory } from '../validators/create-user-validator.
 import { fastifyPreHandlerAdapter } from '../../../presentation/fastify-pre-handler.adapter';
 
 export const userRoutes = (fastify: FastifyInstance) => {
+  fastify.log.info(`Registering user routes`);
   fastify.get('/api/user', async (req, res) => {
     try {
       const getUsersController = getUsersControllerFactory();
@@ -31,4 +32,5 @@ export const userRoutes = (fastify: FastifyInstance) => {
       }
     }
   );
+  fastify.log.info(`User routes registered`);
 };

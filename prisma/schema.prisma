@@ -12,13 +12,38 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  firstName String   @map("first_name")
-  lastName  String   @map("last_name")
-  email     String   @unique
-  username  String   @unique
+  id        Int         @id @default(autoincrement())
+  firstName String      @map("first_name")
+  lastName  String      @map("last_name")
+  email     String      @unique
+  username  String      @unique
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  userGroup UserGroup[]
+
+  @@map("user")
+}
+
+model Group {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  userGroup UserGroup[]
+
+  @@map("group")
+}
+
+model UserGroup {
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @map("user_id")
+
+  group   Group @relation(fields: [groupId], references: [id])
+  groupId Int   @map("group_id")
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("user")
+  @@id([userId, groupId])
+  @@map("user_group")
 }
