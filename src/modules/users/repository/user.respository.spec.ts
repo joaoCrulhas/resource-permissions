@@ -4,7 +4,13 @@ import { PrismaClient } from '../../../../generated/prisma';
 import { UserTestHelper } from '../../../test/user-test.helper';
 
 const makeSut = (): UserRepository => {
-  const prisma = new PrismaClient();
+  const prisma = new PrismaClient({
+    datasources: {
+      db: {
+        url: 'file:./test.db',
+      },
+    },
+  });
   return new UserRepository(prisma);
 };
 describe('UserRepository', () => {
