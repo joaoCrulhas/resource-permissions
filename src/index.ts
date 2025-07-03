@@ -2,18 +2,35 @@ import fastify from 'fastify';
 
 import 'dotenv/config';
 import envVars from './config/env-vars';
+import { PrismaSingleton } from './infra/database/prisma-singleton';
+import { setupRoutes } from './setup/routes';
 
-const server = fastify();
-
-server.get('/ping', async () => {
-  return 'pong\n';
+const server = fastify({
+  logger: true,
 });
 
-server.listen({ port: envVars.PORT }, (err, address) => {
-  console.log(process.env);
-  if (err) {
-    console.error(err);
+server.get('/health', async () => {
+  return {
+    status: 'ok',
+  };
+});
+
+async function runServer() {
+  const port = envVars.PORT;
+  const prisma = PrismaSingleton.getInstance();
+  try {
+    await server.listen({ port: Number(port) });
+    server.log.info(`server listening on ${port}`);
+  } catch (err) {
+    server.log.error(err);
+    await prisma.$disconnect();
     process.exit(1);
+  } finally {
+    await prisma.$disconnect();
   }
-  console.log(`Server listening at ${address}`);
-});
+}
+
+(async () => {
+  setupRoutes(server);
+  await runServer();
+})();

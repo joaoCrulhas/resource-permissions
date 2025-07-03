@@ -2,17 +2,22 @@ import { describe, expect, it, vi } from 'vitest';
 import { CreateUserService } from './create-user.service';
 import { CreateUserRequestDto } from '../dtos/request/create-user-request.dto';
 import { faker } from '@faker-js/faker';
-import { UserRepository } from '../repository/user.repository';
 import { UserEntity } from '../entities/user.entity';
+import { IRepository } from '../../../infra/database';
 
 type SutTypes = {
   sut: CreateUserService;
-  userRepository: UserRepository;
+  userRepository: IRepository<UserEntity>;
 };
+class UserRepositoryMock implements IRepository<UserEntity> {
+  async create(data: CreateUserRequestDto): Promise<UserEntity> {
+    return new UserEntity(1, data.firstName, data.lastName, data.username, data.email);
+  }
+}
 
 // This function will create a SUT(System Under Test) => the CreateUserService
 const makeSut = (): SutTypes => {
-  const userRepository: UserRepository = new UserRepository();
+  const userRepository: UserRepositoryMock = new UserRepositoryMock();
   return {
     userRepository,
     sut: new CreateUserService(userRepository),

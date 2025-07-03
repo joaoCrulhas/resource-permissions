@@ -1,3 +1,3 @@
-export interface IRepository<T = unknown> {
-  create(data: Partial<T>): Promise<T>;
+export interface IRepository<T = unknown, R = unknown> {
+  create(data: T): Promise<R>;
 }

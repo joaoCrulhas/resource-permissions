@@ -1,9 +1,7 @@
-import { IController } from '../../../presentation/controller.interface';
-import { HttpResponse } from '../../../presentation/http';
+import { HttpResponse, IController, StatusCode } from '../../../presentation';
 import { CreateUserRequestDto } from '../dtos/request/create-user-request.dto';
 import { UserEntity } from '../entities/user.entity';
 import { ICreateUser } from '../usecases';
-import { StatusCode } from '../../../presentation/status-code.helper';
 
 export class CreateUserController implements IController<CreateUserRequestDto, UserEntity> {
   constructor(private readonly createUserService: ICreateUser) {}

@@ -4,8 +4,8 @@ export class UserEntity {
   lastName: string;
   username: string;
   email: string;
-  created_at: Date;
-  updated_at: Date | null = null;
+  createdAt: Date;
+  updatedAt: Date | null = null;
 
   constructor(
     id: number,
@@ -13,15 +13,15 @@ export class UserEntity {
     lastName: string,
     username: string,
     email: string,
-    created_at: Date = new Date(),
-    updated_at: Date | null = null
+    createdAt: Date = new Date(),
+    updatedAt: Date | null = null
   ) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.username = username;
     this.email = email;
-    this.created_at = created_at;
-    this.updated_at = updated_at;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
   }
 }

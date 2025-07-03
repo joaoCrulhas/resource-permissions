@@ -1,8 +1,14 @@
 import { IRepository } from '../../../infra/database';
 import { UserEntity } from '../entities/user.entity';
+import { PrismaClient } from '../../../../generated/prisma';
+import { CreateUserRequestDto } from '../dtos/request/create-user-request.dto';
 
-export class UserRepository implements IRepository<UserEntity> {
-  create(data: Partial<UserEntity>): Promise<UserEntity> {
-    throw new Error('Method not implemented.');
+export class UserRepository implements IRepository<CreateUserRequestDto, UserEntity> {
+  constructor(private readonly prismaClient: PrismaClient) {}
+
+  async create(data: CreateUserRequestDto): Promise<UserEntity> {
+    return this.prismaClient.user.create({
+      data,
+    });
   }
 }
