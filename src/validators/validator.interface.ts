@@ -1,4 +1,4 @@
 export interface IValidator<T = unknown> {
-  validate(data: T): boolean;
+  validate(data: T): void;
   message: string;
 }

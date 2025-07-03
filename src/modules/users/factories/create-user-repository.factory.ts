@@ -1,4 +1,4 @@
-import { UserRepository } from '../repository/user.repository';
+import { UserRepository } from '../repository';
 import { PrismaClient } from '../../../../generated/prisma';
 
 export const createUserRepositoryFactory = (prismaClient: PrismaClient): UserRepository => {
