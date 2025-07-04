@@ -4,12 +4,16 @@ import { CreateUserRequestDto } from '../dtos/request/create-user-request.dto';
 import { faker } from '@faker-js/faker';
 import { UserEntity } from '../entities/user.entity';
 import { IRepository } from '../../../infra/database';
+import { UserRepositoryType } from '../repository';
 
 type SutTypes = {
   sut: CreateUserService;
   userRepository: IRepository<UserEntity>;
 };
-class UserRepositoryMock implements IRepository<UserEntity> {
+class UserRepositoryMock implements UserRepositoryType {
+  fetchAll(): Promise<UserEntity[]> {
+    throw new Error('Method not implemented.');
+  }
   async create(data: CreateUserRequestDto): Promise<UserEntity> {
     return new UserEntity(1, data.firstName, data.lastName, data.username, data.email);
   }
@@ -28,7 +32,6 @@ describe('CreateUserService', () => {
   it('should call the repository with correct arguments', async () => {
     const { sut, userRepository } = makeSut();
     const input = createUserInputDto();
-
     const spy = vi.spyOn(userRepository, 'create');
     spy.mockImplementationOnce(() => {
       const mockedUser: UserEntity = new UserEntity(

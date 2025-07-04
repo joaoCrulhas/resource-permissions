@@ -1,7 +1,7 @@
 import { HttpResponse, IController, StatusCode } from '../../../presentation';
 import { CreateGroupRequestDto } from '../dtos';
 import { GroupEntity } from '../entities/group.entity';
-import { ICreateGroup } from '../usecase';
+import { ICreateGroup } from '../usecases';
 
 export class CreateGroupController implements IController<CreateGroupRequestDto, GroupEntity> {
   constructor(private readonly createGroupService: ICreateGroup) {}
