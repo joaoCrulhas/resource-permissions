@@ -1,36 +1,24 @@
 import { FastifyInstance } from 'fastify';
-import { errorAdapter } from '../../../errors';
-import { fastifyPreHandlerAdapter } from '../../../presentation/fastify-pre-handler.adapter';
+import { fastifyPreHandlerAdapter, printRoutes } from '../../../presentation';
 import { createGroupControllerFactory, getGroupsControllerFactory } from '../controllers';
-import { CreateGroupRequestDto } from '../dtos';
 import { groupValidatorsFactory } from '../validators';
+import { fastifyRouterAdapter } from '../../../presentation/fastify-router.adapter';
+
+const GROUP_ROUTES = {
+  GET_GROUPS: '/api/group',
+  CREATE_GROUP: '/api/group',
+} as const;
 
 export const groupRoutes = (fastify: FastifyInstance) => {
   fastify.log.info(`Registering group routes`);
-  fastify.get('/api/group', async (req, res) => {
-    try {
-      const getGroupsController = getGroupsControllerFactory();
-      const response = await getGroupsController.handle();
-      res.status(response.statusCode).send(response.body);
-    } catch (e) {
-      return errorAdapter(e);
-    }
-  });
+  fastify.get(GROUP_ROUTES.GET_GROUPS, fastifyRouterAdapter(getGroupsControllerFactory()));
   fastify.post(
-    '/api/group',
+    GROUP_ROUTES.CREATE_GROUP,
     {
       preHandler: [fastifyPreHandlerAdapter(groupValidatorsFactory())],
     },
-    async (req, res) => {
-      try {
-        const body = req.body as CreateGroupRequestDto;
-        const createGroupController = createGroupControllerFactory();
-        const response = await createGroupController.handle(body);
-        res.status(response.statusCode).send(response.body);
-      } catch (e: unknown) {
-        return errorAdapter(e);
-      }
-    }
+    fastifyRouterAdapter(createGroupControllerFactory())
   );
+  printRoutes(fastify.log, GROUP_ROUTES);
   fastify.log.info(`Group routes registered`);
 };

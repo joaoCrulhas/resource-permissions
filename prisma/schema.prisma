@@ -47,3 +47,13 @@ model UserGroup {
   @@id([userId, groupId])
   @@map("user_group")
 }
+
+model Resource {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("resource")
+}

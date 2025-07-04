@@ -1,36 +1,26 @@
 import { FastifyInstance } from 'fastify';
-import { errorAdapter } from '../../../errors';
-import { AddUserGroupDto } from '../dtos';
-import { addUserGroupControllerFactory, getUsersGroupControllerFactory } from '../controllers';
+import { addUserGroupControllerFactory } from '../controllers';
+import { fastifyRouterAdapter } from '../../../presentation/fastify-router.adapter';
+import { getUsersControllerFactory } from '../../users/controllers';
+import { printRoutes } from '../../../presentation';
+
+const MEMBERSHIP_ROUTES = {
+  ADD_USER_GROUP: '/api/membership',
+  GET_USERS_GROUP: '/api/membership/:groupId',
+} as const;
 
 export const membershipRoutes = (fastify: FastifyInstance) => {
   fastify.log.info(`Registering membership routes`);
 
   fastify.post(
-    '/api/membership',
-    {
-      // preHandler: [fastifyPreHandlerAdapter(groupValidatorsFactory())],
-    },
-    async (req, res) => {
-      try {
-        const body = req.body as AddUserGroupDto;
-        const addUserGroupController = addUserGroupControllerFactory();
-        const response = await addUserGroupController.handle(body);
-        res.status(response.statusCode).send(response.body);
-      } catch (e: unknown) {
-        return errorAdapter(e);
-      }
-    }
+    MEMBERSHIP_ROUTES.ADD_USER_GROUP,
+    fastifyRouterAdapter(addUserGroupControllerFactory())
+  );
+  fastify.get<{ Params: { groupId: number } }>(
+    MEMBERSHIP_ROUTES.GET_USERS_GROUP,
+    fastifyRouterAdapter(getUsersControllerFactory())
   );
 
-  fastify.get<{ Params: { groupId: number } }>('/api/membership/:groupId', async (req, res) => {
-    try {
-      const getUserGroupController = getUsersGroupControllerFactory();
-      const response = await getUserGroupController.handle({ groupId: req.params.groupId });
-      res.status(response.statusCode).send(response.body);
-    } catch (e) {
-      return errorAdapter(e);
-    }
-  });
+  printRoutes(fastify.log, MEMBERSHIP_ROUTES);
   fastify.log.info(`Membership routes registered`);
 };

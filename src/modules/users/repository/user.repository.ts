@@ -3,7 +3,8 @@ import { UserEntity } from '../entities/user.entity';
 import { PrismaClient } from '../../../../generated/prisma';
 import { CreateUserRequestDto } from '../dtos/request/create-user-request.dto';
 
-export class UserRepository implements IRepository<CreateUserRequestDto, UserEntity> {
+export type UserRepositoryType = IRepository<CreateUserRequestDto, UserEntity>;
+export class UserRepository implements UserRepositoryType {
   constructor(private readonly prismaClient: PrismaClient) {}
 
   async fetchAll(): Promise<UserEntity[]> {
