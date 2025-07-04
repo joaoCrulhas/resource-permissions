@@ -5,8 +5,7 @@ export const prismaErrorAdapter = (error: PrismaClientKnownRequestError) => {
   switch (error.code) {
     case 'P2002': {
       let target = error.meta?.target as Array<string>;
-      target = target?.length > 0 ? target : [error.meta?.target as string];
-      console.log(error.meta?.target);
+      target = target?.length > 0 && target ? target : [error.meta?.target as string];
       const fieldMessage = target
         ? `Unique constraint failed on the field(s): ${target}`
         : 'Unique constraint violation';
