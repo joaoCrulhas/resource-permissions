@@ -8,6 +8,7 @@ export default async () => {
       stdio: 'inherit',
     });
     console.log('✅ Prisma migrations applied successfully.');
+    process.env.DATABASE_URL = 'file:./test.db';
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     console.error('Failed to apply migrations for the test database.');

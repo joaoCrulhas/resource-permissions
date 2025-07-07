@@ -2,6 +2,15 @@ import { configDefaults, defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
+    pool: 'forks',
+    poolOptions: {
+      forks: {
+        singleFork: true,
+      },
+      threads: {
+        singleThread: true,
+      },
+    },
     coverage: {
       enabled: true,
       provider: 'v8',
@@ -16,6 +25,8 @@ export default defineConfig({
         'node_modules/',
         'dist/',
         '**/__tests__/**',
+        '**/entities/**',
+        '**/dtos/**',
         '**/*.d.ts',
         '**/index.ts',
         '**/*.interface.ts',

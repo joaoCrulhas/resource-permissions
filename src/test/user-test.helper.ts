@@ -1,4 +1,4 @@
-import { Prisma } from '../../generated/prisma';
+import { Prisma } from '@prisma-generated/client';
 import { faker } from '@faker-js/faker';
 
 export class UserTestHelper {
