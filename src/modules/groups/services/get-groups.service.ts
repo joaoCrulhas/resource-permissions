@@ -4,7 +4,7 @@ import { IGetGroups } from '../usecases';
 
 export class GetGroupsService implements IGetGroups {
   constructor(private readonly groupRepository: GroupRepositoryType) {}
-  async getAll(): Promise<GroupEntity[]> {
+  async exec(): Promise<GroupEntity[]> {
     return await this.groupRepository.fetchAll();
   }
 }

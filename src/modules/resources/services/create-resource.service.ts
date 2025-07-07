@@ -6,7 +6,7 @@ import { ResourceEntity } from '../entities';
 export class CreateResourceService implements ICreateResource {
   constructor(private readonly resourceRepository: ResourceRepositoryType) {}
 
-  async create(input: CreateResourceRequestDto): Promise<ResourceEntity> {
+  async exec(input: CreateResourceRequestDto): Promise<ResourceEntity> {
     return await this.resourceRepository.create(input);
   }
 }

@@ -22,7 +22,7 @@ describe('AddUserGroupService', () => {
 
   it('should call the membership repository with correct params', async () => {
     const spy = vi.spyOn(membershipRepositoryMock, 'create');
-    await sut.add(1, 1);
+    await sut.exec(1, 1);
     expect(spy).toHaveBeenCalledWith({
       groupId: 1,
       userId: 1,
@@ -33,6 +33,6 @@ describe('AddUserGroupService', () => {
     vi.spyOn(membershipRepositoryMock, 'create').mockImplementationOnce(() => {
       throw new Error('Database Error');
     });
-    await expect(sut.add(1, 1)).rejects.toThrow();
+    await expect(sut.exec(1, 1)).rejects.toThrow();
   });
 });

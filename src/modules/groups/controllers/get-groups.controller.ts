@@ -7,7 +7,7 @@ export class GetGroupsController implements IController<void, GroupEntity[]> {
   async handle(_request: void): Promise<HttpResponse<GroupEntity[]>> {
     return {
       statusCode: StatusCode.OK,
-      body: await this.getGroupsService.getAll(),
+      body: await this.getGroupsService.exec(),
     };
   }
 }

@@ -4,5 +4,5 @@ export type AddResourceGlobalArgs = {
   resourceId: number;
 };
 export interface IAddResourceGlobal {
-  addGlobal(input: AddResourceGlobalArgs): Promise<ResourceGlobalEntity>;
+  exec(input: AddResourceGlobalArgs): Promise<ResourceGlobalEntity>;
 }

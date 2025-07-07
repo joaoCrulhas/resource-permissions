@@ -11,7 +11,7 @@ export type AddResourceGlobalControllerType = IController<
 export class AddResourceGlobalController implements AddResourceGlobalControllerType {
   constructor(private readonly addResourceGlobal: IAddResourceGlobal) {}
   async handle(request: AddResourceGlobalRequestDto): Promise<HttpResponse<ResourceGlobalEntity>> {
-    const response = await this.addResourceGlobal.addGlobal({
+    const response = await this.addResourceGlobal.exec({
       resourceId: request.resourceId,
     });
     return {

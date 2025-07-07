@@ -5,7 +5,7 @@ import { ICreateGroup } from '../usecases';
 
 export class CreateGroupService implements ICreateGroup {
   constructor(private readonly groupRepository: GroupRepositoryType) {}
-  async create(input: CreateGroupRequestDto): Promise<GroupEntity> {
+  async exec(input: CreateGroupRequestDto): Promise<GroupEntity> {
     return await this.groupRepository.create(input);
   }
 }

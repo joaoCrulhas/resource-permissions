@@ -4,7 +4,7 @@ import { MembershipRepositoryType } from '../repository';
 
 export class GetUserGroupService implements IGetUsersGroup {
   constructor(private readonly membershipRepository: MembershipRepositoryType) {}
-  async execute(groupId: number): Promise<UserEntity[]> {
+  async exec(groupId: number): Promise<UserEntity[]> {
     return await this.membershipRepository.getUsersByGroupId(groupId);
   }
 }

@@ -15,7 +15,7 @@ export class GetResourcesByUserController implements GetResourcesByUserControlle
     _request: GetResourcesByUserRequestDto,
     params: { userId: number }
   ): Promise<HttpResponse<ResourceEntity[]>> {
-    const response = await this.getResourcesByUserService.getResourcesByUser(Number(params.userId));
+    const response = await this.getResourcesByUserService.exec(Number(params.userId));
     return {
       body: response,
       statusCode: StatusCode.OK,

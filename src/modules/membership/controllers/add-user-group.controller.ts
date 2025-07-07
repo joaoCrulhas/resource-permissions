@@ -7,7 +7,7 @@ export class AddUserGroupController implements AddUserGroupControllerType {
   constructor(private readonly addUserGroupService: IAddUserToGroup) {}
 
   async handle(request: AddUserGroupDto): Promise<HttpResponse<string>> {
-    await this.addUserGroupService.add(request.userId, request.groupId);
+    await this.addUserGroupService.exec(request.userId, request.groupId);
     return {
       statusCode: StatusCode.CREATED,
       body: 'User added to group',

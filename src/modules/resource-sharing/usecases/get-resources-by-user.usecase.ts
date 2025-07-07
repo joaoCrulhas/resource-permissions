@@ -1,5 +1,5 @@
 import { ResourceEntity } from '../../resources/entities';
 
 export interface IGetResourcesByUser {
-  getResourcesByUser(userId: number): Promise<ResourceEntity[]>;
+  exec(userId: number): Promise<ResourceEntity[]>;
 }

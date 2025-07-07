@@ -8,7 +8,7 @@ export class GetAllResourcesController implements GetAllResourcesControllerType 
   constructor(private readonly getAllResourcesUsers: IGetResourcesUserCount) {}
 
   async handle(_request: never): Promise<HttpResponse<ResourceEntity[]>> {
-    const response = await this.getAllResourcesUsers.getResourcesUserCount();
+    const response = await this.getAllResourcesUsers.exec();
     return {
       body: response,
       statusCode: StatusCode.OK,

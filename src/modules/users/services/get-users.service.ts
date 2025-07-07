@@ -9,13 +9,13 @@ export class GetUsersService implements IGetUsers {
     private readonly userRepository: UserRepositoryType
   ) {}
 
-  async getUsers(withResourcesAmount: boolean): Promise<UserEntity[]> {
+  async exec(withResourcesAmount: boolean): Promise<UserEntity[]> {
     const users = await this.userRepository.fetchAll();
     if (!withResourcesAmount) {
       return users;
     }
     for (const user of users) {
-      user.amountResources = (await this.getResourcesByUser.getResourcesByUser(user.id)).length;
+      user.amountResources = (await this.getResourcesByUser.exec(user.id)).length;
     }
     return users;
   }

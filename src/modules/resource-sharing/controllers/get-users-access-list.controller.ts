@@ -16,7 +16,7 @@ export class GetUsersAccessListController implements GetUsersAccessListControlle
     _request: GetUsersAccessListRequestDto,
     params: { resourceId: number }
   ): Promise<HttpResponse<UserEntity[]>> {
-    const response = await this.getUsersAccessList.getUsersAccessList(Number(params.resourceId));
+    const response = await this.getUsersAccessList.exec(Number(params.resourceId));
     return {
       body: response,
       statusCode: StatusCode.OK,

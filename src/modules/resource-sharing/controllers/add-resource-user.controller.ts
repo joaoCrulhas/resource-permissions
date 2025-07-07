@@ -11,7 +11,7 @@ export type AddResourceUserControllerType = IController<
 export class AddResourceUserController implements AddResourceUserControllerType {
   constructor(private readonly addResourceUser: IAddResourceUser) {}
   async handle(request: AddResourceUserRequestDto): Promise<HttpResponse<ResourceUserEntity>> {
-    const response = await this.addResourceUser.addResourceUser({
+    const response = await this.addResourceUser.exec({
       userId: request.userId,
       resourceId: request.resourceId,
       ...(request.isGlobal && { isGlobal: request.isGlobal }),

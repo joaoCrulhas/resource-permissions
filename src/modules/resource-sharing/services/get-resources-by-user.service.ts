@@ -4,7 +4,7 @@ import { ResourceSharingRepositoryType } from '../repository';
 
 export class GetResourcesByUserService implements IGetResourcesByUser {
   constructor(private readonly resourceSharingRepository: ResourceSharingRepositoryType) {}
-  async getResourcesByUser(userId: number): Promise<ResourceEntity[]> {
+  async exec(userId: number): Promise<ResourceEntity[]> {
     return await this.resourceSharingRepository.getResourcesByUser(userId);
   }
 }

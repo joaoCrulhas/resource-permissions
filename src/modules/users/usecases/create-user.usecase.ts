@@ -1,6 +1,6 @@
-import { CreateUserRequestDto } from '../dtos/request/create-user-request.dto';
+import { CreateUserRequestDto } from '../dtos';
 import { UserEntity } from '../entities/user.entity';
 
 export interface ICreateUser {
-  createUser(input: CreateUserRequestDto): Promise<UserEntity>;
+  exec(input: CreateUserRequestDto): Promise<UserEntity>;
 }

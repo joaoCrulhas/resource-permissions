@@ -10,7 +10,7 @@ export class CreateResourceController
   async handle(request: CreateResourceRequestDto): Promise<HttpResponse<ResourceEntity>> {
     return {
       statusCode: 201,
-      body: await this.createResourceService.create(request),
+      body: await this.createResourceService.exec(request),
     };
   }
 }

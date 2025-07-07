@@ -1,5 +1,3 @@
-export type EnvVars = 'PORT';
-
 interface EnvVariable {
   PORT: number;
 }

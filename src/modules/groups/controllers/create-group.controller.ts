@@ -8,7 +8,7 @@ export class CreateGroupController implements IController<CreateGroupRequestDto,
   async handle(request: CreateGroupRequestDto): Promise<HttpResponse<GroupEntity>> {
     return {
       statusCode: StatusCode.CREATED,
-      body: await this.createGroupService.create(request),
+      body: await this.createGroupService.exec(request),
     };
   }
 }

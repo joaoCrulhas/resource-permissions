@@ -1,3 +1,3 @@
 export interface IAddUserToGroup {
-  add(userId: number, groupId: number): Promise<void>;
+  exec(userId: number, groupId: number): Promise<void>;
 }

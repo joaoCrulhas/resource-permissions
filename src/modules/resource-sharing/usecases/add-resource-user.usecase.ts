@@ -5,5 +5,5 @@ export type AddResourceUserArgs = {
   userId: number;
 };
 export interface IAddResourceUser {
-  addResourceUser(input: AddResourceUserArgs): Promise<ResourceUserEntity>;
+  exec(input: AddResourceUserArgs): Promise<ResourceUserEntity>;
 }

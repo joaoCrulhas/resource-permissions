@@ -11,10 +11,7 @@ export type AddResourceGroupControllerType = IController<
 export class AddResourceGroupController implements AddResourceGroupControllerType {
   constructor(private readonly addResourceGroup: IAddResourceToGroup) {}
   async handle(request: AddResourceGroupRequestDto): Promise<HttpResponse<ResourceGroupEntity>> {
-    const response = await this.addResourceGroup.addResourceGroup(
-      request.resourceId,
-      request.groupId
-    );
+    const response = await this.addResourceGroup.exec(request.resourceId, request.groupId);
     return {
       statusCode: StatusCode.CREATED,
       body: response as ResourceGroupEntity,

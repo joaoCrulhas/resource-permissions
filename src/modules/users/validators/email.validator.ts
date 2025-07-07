@@ -1,5 +1,5 @@
 import { IValidator } from '../../../validators';
-import { CreateUserRequestDto } from '../dtos/request/create-user-request.dto';
+import { CreateUserRequestDto } from '../dtos';
 import { BadRequestError } from '../../../errors';
 
 export class EmailValidator implements IValidator<CreateUserRequestDto> {

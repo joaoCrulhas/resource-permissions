@@ -15,7 +15,7 @@ export class GetUserGroupController implements GetUserGroupControllerType {
     _request: GetUsersGroupDto,
     params: GetUsersByGroupParams
   ): Promise<HttpResponse<UserEntity[]>> {
-    const users = await this.getUsersGroupService.execute(Number(params.groupId));
+    const users = await this.getUsersGroupService.exec(Number(params.groupId));
     return {
       body: users,
       statusCode: StatusCode.OK,

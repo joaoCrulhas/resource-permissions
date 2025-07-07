@@ -5,7 +5,7 @@ import { ResourceUserEntity } from '../entities';
 export class AddResourceUserService implements IAddResourceUser {
   constructor(private readonly resourceSharingRepository: ResourceSharingRepositoryType) {}
 
-  async addResourceUser(input: AddResourceUserArgs): Promise<ResourceUserEntity> {
+  async exec(input: AddResourceUserArgs): Promise<ResourceUserEntity> {
     const response = await this.resourceSharingRepository.create({
       resourceId: input.resourceId,
       userId: input.userId,

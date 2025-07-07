@@ -9,12 +9,12 @@ export class AddResourceGlobalService implements IAddResourceGlobal {
     private readonly resourceSharingRepository: ResourceSharingRepositoryType
   ) {}
 
-  async addGlobal(input: AddResourceGlobalArgs): Promise<ResourceGlobalEntity> {
+  async exec(input: AddResourceGlobalArgs): Promise<ResourceGlobalEntity> {
     const response: ResourceGlobalEntity = {
       resourceId: input.resourceId,
       usersId: [],
     };
-    const users = await this.getUsers.getUsers(false);
+    const users = await this.getUsers.exec(false);
     for (const user of users) {
       await this.resourceSharingRepository.create({
         resourceId: input.resourceId,
