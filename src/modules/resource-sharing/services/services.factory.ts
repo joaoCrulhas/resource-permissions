@@ -1,10 +1,17 @@
-import { IAddResourceToGroup, IAddResourceUser } from '../usecases';
+import {
+  IAddResourceToGroup,
+  IAddResourceUser,
+  IGetResourcesByUser,
+  IGetUsersAccessList,
+} from '../usecases';
 import { AddResourceGroupService } from './add-resource-group.service';
 import { resourceSharingRepositoryFactory } from '../repository';
 import { AddResourceUserService } from './add-resource-user.service';
 import { IAddResourceGlobal } from '../usecases/add-resource-global.usecase';
 import { AddResourceGlobalService } from './add-resource-global.service';
-import { getAllUsersServiceFactory } from '../../users/services';
+import { GetUsersAccessListService } from './get-users-access-list.service';
+import { GetResourcesByUserService } from './get-resources-by-user.service';
+import { getUsersServiceFactory } from '../../users/services';
 
 export const addResourceGroupServiceFactory = (): IAddResourceToGroup => {
   return new AddResourceGroupService(resourceSharingRepositoryFactory());
@@ -15,8 +22,13 @@ export const addResourceUserServiceFactory = (): IAddResourceUser => {
 };
 
 export const addResourceGlobalServiceFactory = (): IAddResourceGlobal => {
-  return new AddResourceGlobalService(
-    getAllUsersServiceFactory(),
-    resourceSharingRepositoryFactory()
-  );
+  return new AddResourceGlobalService(getUsersServiceFactory(), resourceSharingRepositoryFactory());
+};
+
+export const getUsersAccessListServiceFactory = (): IGetUsersAccessList => {
+  return new GetUsersAccessListService(resourceSharingRepositoryFactory());
+};
+
+export const getResourcesByUserServiceFactory = (): IGetResourcesByUser => {
+  return new GetResourcesByUserService(resourceSharingRepositoryFactory());
 };

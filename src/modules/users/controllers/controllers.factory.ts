@@ -1,10 +1,8 @@
-import { IController } from '../../../presentation';
-import { UserEntity } from '../entities/user.entity';
-import { GetUsersController } from './get-users.controller';
+import { GetUsersController, GetUsersControllerType } from './get-users.controller';
 import { createUserServiceFactory, getUsersServiceFactory } from '../services';
 import { CreateUserController } from './create-user.controller';
 
-export const getUsersControllerFactory = (): IController<void, UserEntity[]> => {
+export const getUsersControllerFactory = (): GetUsersControllerType => {
   return new GetUsersController(getUsersServiceFactory());
 };
 

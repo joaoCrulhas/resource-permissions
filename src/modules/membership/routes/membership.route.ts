@@ -24,7 +24,7 @@ export const membershipRoutes = (fastify: FastifyInstance) => {
         const response = await controller.handle({
           groupId: Number(req.params.groupId),
         });
-        res.status(response.statusCode).send(response.body);
+        res.status(response.statusCode).send({ data: response.body });
       } catch (e) {
         errorAdapter(e);
       }

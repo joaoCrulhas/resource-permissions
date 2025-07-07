@@ -7,7 +7,7 @@ export const fastifyRouterAdapter = <T = never, R = unknown>(controller: IContro
     try {
       const body = req.body as T;
       const response = await controller.handle(body);
-      res.status(response.statusCode).send(response.body as R);
+      res.status(response.statusCode).send({ data: response.body as R });
     } catch (e: unknown) {
       return errorAdapter(e);
     }

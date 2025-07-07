@@ -1,11 +1,11 @@
 import { ResourceGlobalEntity } from '../entities';
 import { ResourceSharingRepositoryType } from '../repository';
 import { AddResourceGlobalArgs, IAddResourceGlobal } from '../usecases/add-resource-global.usecase';
-import { IGetAllUsers } from '../../users/usecases';
+import { IGetUsers } from '../../users/usecases';
 
 export class AddResourceGlobalService implements IAddResourceGlobal {
   constructor(
-    private readonly getAllUsers: IGetAllUsers,
+    private readonly getUsers: IGetUsers,
     private readonly resourceSharingRepository: ResourceSharingRepositoryType
   ) {}
 
@@ -14,7 +14,7 @@ export class AddResourceGlobalService implements IAddResourceGlobal {
       resourceId: input.resourceId,
       usersId: [],
     };
-    const users = await this.getAllUsers.getAll();
+    const users = await this.getUsers.getUsers(false);
     for (const user of users) {
       await this.resourceSharingRepository.create({
         resourceId: input.resourceId,

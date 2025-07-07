@@ -1,13 +1,21 @@
 import { PrismaClient } from '../../../../generated/prisma';
 import { IRepository } from '../../../infra/database';
 import { ResourceGroupEntity, ResourceUserEntity } from '../entities';
+import { UserEntity } from '../../users/entities/user.entity';
+import { ResourceEntity } from '../../resources/entities';
 
 export type ResourceResponse = ResourceGroupEntity | ResourceUserEntity;
+
+interface IResourceSharingRepository {
+  getUsersAccessList(resourceId: number): Promise<UserEntity[]>;
+  getResourcesByUser(userId: number): Promise<ResourceEntity[]>;
+}
 
 export type ResourceSharingRepositoryType = IRepository<
   CreateResourceSharingArgs,
   ResourceResponse
->;
+> &
+  IResourceSharingRepository;
 
 export type CreateResourceSharingArgs = {
   resourceId: number;
@@ -19,6 +27,104 @@ export type CreateResourceSharingArgs = {
 
 export class ResourceSharingRepository implements ResourceSharingRepositoryType {
   constructor(private readonly prisma: PrismaClient) {}
+
+  async getResourcesByUser(userId: number): Promise<ResourceEntity[]> {
+    const uniqueResourceMap = new Map<number, ResourceEntity>();
+    const notInFilter: number[] = [];
+
+    const resourceUsers = await this.prisma.resourceGroup.findMany({
+      include: {
+        resource: true,
+      },
+      where: {
+        group: {
+          userGroup: {
+            some: {
+              userId,
+            },
+          },
+        },
+      },
+    });
+
+    for (const { resource } of resourceUsers) {
+      uniqueResourceMap.set(resource.id, ResourceEntity.fromPrisma(resource));
+      notInFilter.push(resource.id);
+    }
+
+    const resourceByUser = await this.prisma.resourceUser.findMany({
+      include: {
+        resource: true,
+      },
+      where: {
+        userId,
+        NOT: {
+          resourceId: {
+            in: notInFilter,
+          },
+        },
+      },
+    });
+
+    for (const { resource } of resourceByUser) {
+      uniqueResourceMap.set(resource.id, ResourceEntity.fromPrisma(resource));
+    }
+
+    return Array.from(uniqueResourceMap.values());
+  }
+
+  async getUsersAccessList(resourceId: number): Promise<UserEntity[]> {
+    const uniqueUsersMap = new Map<number, UserEntity>();
+    const notInFilter: number[] = [];
+    const usersGroupEntities = await this.prisma.resourceGroup.findMany({
+      include: {
+        group: {
+          include: {
+            userGroup: {
+              include: {
+                user: true,
+              },
+            },
+          },
+        },
+      },
+      where: {
+        resourceId,
+      },
+    });
+
+    for (const { group } of usersGroupEntities) {
+      for (const { user } of group.userGroup) {
+        notInFilter.push(user.id);
+        uniqueUsersMap.set(user.id, UserEntity.fromPrisma(user));
+      }
+    }
+
+    const usersDirectEntities = await this.prisma.resourceUser.findMany({
+      include: {
+        user: true,
+      },
+      where: {
+        resourceId,
+        AND: {
+          user: {
+            NOT: {
+              id: {
+                in: notInFilter.map((userId) => userId),
+              },
+            },
+          },
+        },
+      },
+    });
+
+    for (const { user } of usersDirectEntities) {
+      uniqueUsersMap.set(user.id, UserEntity.fromPrisma(user));
+    }
+
+    return Array.from(uniqueUsersMap.values());
+  }
+
   private async createUserResourceSharing(
     userId: number,
     resourceId: number,

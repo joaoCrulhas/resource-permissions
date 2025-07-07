@@ -8,6 +8,7 @@ export class UserEntity {
   email: string;
   createdAt: Date;
   updatedAt: Date | null = null;
+  amountResources?: number;
 
   constructor(
     id: number,

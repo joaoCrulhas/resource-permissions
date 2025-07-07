@@ -1,11 +1,12 @@
 import { HttpResponse, IController, StatusCode } from '../../../presentation';
 import { UserEntity } from '../entities/user.entity';
-import { IGetUsers } from '../usecases/get-user.usecase';
+import { IGetUsers } from '../usecases';
 
-export class GetUsersController implements IController<void, UserEntity[]> {
+export type GetUsersControllerType = IController<{ withResourcesAmount: boolean }, UserEntity[]>;
+export class GetUsersController implements GetUsersControllerType {
   constructor(private readonly getUsersService: IGetUsers) {}
-  async handle(_request: void): Promise<HttpResponse<UserEntity[]>> {
-    const users = await this.getUsersService.getUsers();
+  async handle(request: { withResourcesAmount: boolean }): Promise<HttpResponse<UserEntity[]>> {
+    const users = await this.getUsersService.getUsers(request.withResourcesAmount);
     return {
       body: users,
       statusCode: StatusCode.OK,

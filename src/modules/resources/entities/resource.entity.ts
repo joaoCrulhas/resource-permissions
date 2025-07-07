@@ -3,9 +3,10 @@ import { Resource } from '../../../../generated/prisma';
 export class ResourceEntity {
   id: number;
   name: string;
-  description: string | null;
+  description?: string | null;
   createdAt: Date;
   updatedAt: Date;
+  amountUsers?: number;
   constructor(name: string, description: string | null, id: number) {
     this.id = id;
     this.name = name;
