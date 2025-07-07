@@ -1,20 +1,22 @@
 import { HttpResponse, IController, StatusCode } from '../../../presentation';
-import { AddResourceGlobalRequestDto, AddResourceGlobalResponseDto } from '../dtos';
-import { IAddResourceGlobal } from '../usecases';
+import { AddResourceGlobalRequestDto } from '../dtos';
+import { ResourceGlobalEntity } from '../entities';
+import { IAddResourceGlobal } from '../usecases/add-resource-global.usecase';
 
 export type AddResourceGlobalControllerType = IController<
   AddResourceGlobalRequestDto,
-  AddResourceGlobalResponseDto
+  ResourceGlobalEntity
 >;
+
 export class AddResourceGlobalController implements AddResourceGlobalControllerType {
   constructor(private readonly addResourceGlobal: IAddResourceGlobal) {}
-  async handle({
-    resourceId,
-  }: AddResourceGlobalRequestDto): Promise<HttpResponse<AddResourceGlobalResponseDto>> {
-    const usersAmount = await this.addResourceGlobal.add(resourceId);
+  async handle(request: AddResourceGlobalRequestDto): Promise<HttpResponse<ResourceGlobalEntity>> {
+    const response = await this.addResourceGlobal.addGlobal({
+      resourceId: request.resourceId,
+    });
     return {
       statusCode: StatusCode.CREATED,
-      body: new AddResourceGlobalResponseDto(resourceId, usersAmount),
+      body: response as ResourceGlobalEntity,
     };
   }
 }

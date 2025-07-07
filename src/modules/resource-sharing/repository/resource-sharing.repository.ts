@@ -1,164 +1,95 @@
+import { PrismaClient } from '../../../../generated/prisma';
 import { IRepository } from '../../../infra/database';
-import { AddResourceSharingArgs } from './repository.type';
-import { ResourceScopeEnum, ResourceSharingEntity, ResourceSharingScopeEntity } from '../entities';
-import { Prisma, PrismaClient } from '../../../../generated/prisma';
+import { ResourceGroupEntity, ResourceUserEntity } from '../entities';
 
-interface IResourceSharing {
-  addScopeToResource(
-    resourceSharingId: number,
-    scope: ResourceScopeEnum
-  ): Promise<ResourceSharingScopeEntity>;
-  createMany(
-    usersId: number[],
-    resourceId: number,
-    scope: ResourceScopeEnum,
-    groupId?: number
-  ): Promise<number>;
-  findResourceSharingByGroup(resourceId: number, groupId: number): Promise<boolean>;
-  findAllByResourceByScope(
-    resourceId: number,
-    scope: ResourceScopeEnum
-  ): Promise<ResourceSharingEntity[]>;
-
-  findResourceSharingByResourceAndUser(
-    resourceId: number,
-    userId: number
-  ): Promise<ResourceSharingEntity | null>;
-}
+export type ResourceResponse = ResourceGroupEntity | ResourceUserEntity;
 
 export type ResourceSharingRepositoryType = IRepository<
-  AddResourceSharingArgs,
-  ResourceSharingEntity
-> &
-  IResourceSharing;
+  CreateResourceSharingArgs,
+  ResourceResponse
+>;
+
+export type CreateResourceSharingArgs = {
+  resourceId: number;
+  groupId?: number;
+  userId?: number;
+  isGlobal?: boolean;
+  isIndividual?: boolean;
+};
 
 export class ResourceSharingRepository implements ResourceSharingRepositoryType {
   constructor(private readonly prisma: PrismaClient) {}
-
-  async findResourceSharingByResourceAndUser(
+  private async createUserResourceSharing(
+    userId: number,
     resourceId: number,
-    userId: number
-  ): Promise<ResourceSharingEntity | null> {
-    const response = await this.prisma.resourceSharing.findFirst({
+    isIndividual?: boolean,
+    isGlobal?: boolean
+  ) {
+    const resourceUser = await this.prisma.resourceUser.upsert({
       include: {
-        resourceSharingScope: true,
+        resource: true,
+        user: true,
       },
       where: {
-        resourceId,
-        userId,
-      },
-    });
-    return response ? ResourceSharingEntity.fromPrisma(response) : null;
-  }
-
-  async addScopeToResource(
-    resourceSharingId: number,
-    scope: ResourceScopeEnum
-  ): Promise<ResourceSharingScopeEntity> {
-    const scopeCreated = await this.prisma.resourceSharingScope.create({
-      data: {
-        resourceSharingId,
-        resourceSharingScope: scope,
-      },
-    });
-    return ResourceSharingScopeEntity.fromPrisma(scopeCreated);
-  }
-
-  async findAllByResourceByScope(
-    resourceId: number,
-    scope: ResourceScopeEnum
-  ): Promise<ResourceSharingEntity[]> {
-    const response = await this.prisma.resourceSharing.findMany({
-      include: {
-        resourceSharingScope: true,
-      },
-      where: {
-        resourceId,
-        AND: {
-          resourceSharingScope: {
-            some: {
-              resourceSharingScope: scope,
-            },
-          },
+        resourceId_userId: {
+          resourceId,
+          userId,
         },
       },
-    });
-    return response.map((element) => ResourceSharingEntity.fromPrisma(element));
-  }
-
-  async findResourceSharingByGroup(resourceId: number, groupId: number): Promise<boolean> {
-    const response = await this.prisma.resourceSharing.count({
-      where: {
-        groupId,
+      create: {
         resourceId,
+        userId,
+        ...(isIndividual && { isIndividual }),
+        ...(isGlobal && { isGlobal }),
+      },
+      update: {
+        isIndividual: true,
+        ...(isIndividual && { isIndividual }),
+        ...(isGlobal && { isGlobal }),
       },
     });
-    return response > 0;
+
+    return ResourceUserEntity.fromPrisma(resourceUser.resource, resourceUser.user);
   }
 
-  async createMany(
-    usersId: number[],
-    resourceId: number,
-    scope: ResourceScopeEnum,
-    groupId?: number
-  ): Promise<number> {
-    const createdMany: ResourceSharingEntity[] = [];
-    const data: Prisma.ResourceSharingCreateManyInput[] = usersId.map((element) => {
-      return {
-        resourceId,
-        userId: element,
-        ...(groupId && { groupId: groupId }),
-      };
-    });
-
-    for (const d of data) {
-      const input: AddResourceSharingArgs = {
-        resourceSharingScope: scope,
-        resourceId: d.resourceId,
-        userId: d.userId,
-      };
-      if (d.groupId) {
-        input.groupId = d.groupId;
-      }
-      const response = await this.create(input);
-      createdMany.push(response);
-    }
-    return createdMany.length;
-  }
-
-  async create(data: AddResourceSharingArgs): Promise<ResourceSharingEntity> {
-    const resourceShared = await this.prisma.resourceSharing.create({
+  private async createGroupResourceSharing(groupId: number, resourceId: number) {
+    const resourceGroup = await this.prisma.resourceGroup.create({
       include: {
-        resourceSharingScope: true,
+        group: true,
+        resource: true,
       },
       data: {
-        user: {
+        group: {
           connect: {
-            id: data.userId,
+            id: groupId,
           },
         },
         resource: {
           connect: {
-            id: data.resourceId,
-          },
-        },
-        ...(data.groupId && {
-          group: {
-            connect: {
-              id: data.groupId,
-            },
-          },
-        }),
-        resourceSharingScope: {
-          create: {
-            resourceSharingScope: data.resourceSharingScope,
+            id: resourceId,
           },
         },
       },
     });
-    return ResourceSharingEntity.fromPrisma(resourceShared);
+    return ResourceGroupEntity.fromPrisma(resourceGroup.resource, resourceGroup.group);
   }
-  fetchAll(): Promise<ResourceSharingEntity[]> {
-    throw new Error('Method not implemented.');
+  async create(data: CreateResourceSharingArgs): Promise<ResourceResponse> {
+    if (data.groupId) {
+      return this.createGroupResourceSharing(data.groupId, data.resourceId);
+    }
+    if (data.userId) {
+      return await this.createUserResourceSharing(
+        data.userId,
+        data.resourceId,
+        data.isIndividual,
+        data.isGlobal
+      );
+    }
+
+    throw new Error('Group or user is required');
+  }
+
+  fetchAll(): Promise<ResourceGroupEntity[]> {
+    return Promise.resolve([]);
   }
 }

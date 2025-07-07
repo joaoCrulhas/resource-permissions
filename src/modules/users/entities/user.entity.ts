@@ -1,3 +1,5 @@
+import { User } from '../../../../generated/prisma';
+
 export class UserEntity {
   id: number;
   firstName: string;
@@ -23,5 +25,16 @@ export class UserEntity {
     this.email = email;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+  }
+  static fromPrisma(user: User) {
+    return new UserEntity(
+      user.id,
+      user.firstName,
+      user.lastName,
+      user.username,
+      user.email,
+      user.createdAt,
+      user.updatedAt
+    );
   }
 }

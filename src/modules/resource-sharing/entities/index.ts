@@ -1,2 +1,3 @@
-export * from './resource-sharing.entity';
-export * from './resource-sharing-scope.entity';
+export * from './resource-group.entity';
+export * from './resource-user.entity';
+export * from './resource-global.entity';

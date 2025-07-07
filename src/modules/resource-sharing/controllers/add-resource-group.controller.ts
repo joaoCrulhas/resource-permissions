@@ -1,25 +1,23 @@
 import { HttpResponse, IController, StatusCode } from '../../../presentation';
-import { AddResourceGroupRequestDto, AddResourceGroupResponseDto } from '../dtos';
-import { IAddResourceGroup } from '../usecases';
+import { AddResourceGroupRequestDto } from '../dtos';
+import { IAddResourceToGroup } from '../usecases';
+import { ResourceGroupEntity } from '../entities';
 
 export type AddResourceGroupControllerType = IController<
   AddResourceGroupRequestDto,
-  AddResourceGroupResponseDto
+  ResourceGroupEntity
 >;
 
 export class AddResourceGroupController implements AddResourceGroupControllerType {
-  constructor(private readonly addResourceGroup: IAddResourceGroup) {}
-
-  async handle(
-    request: AddResourceGroupRequestDto
-  ): Promise<HttpResponse<AddResourceGroupResponseDto>> {
-    const response = await this.addResourceGroup.add({
-      resourceId: request.resourceId,
-      groupId: request.groupId,
-    });
+  constructor(private readonly addResourceGroup: IAddResourceToGroup) {}
+  async handle(request: AddResourceGroupRequestDto): Promise<HttpResponse<ResourceGroupEntity>> {
+    const response = await this.addResourceGroup.addResourceGroup(
+      request.resourceId,
+      request.groupId
+    );
     return {
       statusCode: StatusCode.CREATED,
-      body: response,
+      body: response as ResourceGroupEntity,
     };
   }
 }

@@ -18,26 +18,26 @@ enum ResourceScopeEnum {
 }
 
 model User {
-  id              Int               @id @default(autoincrement())
-  firstName       String            @map("first_name")
-  lastName        String            @map("last_name")
-  email           String            @unique
-  username        String            @unique
-  createdAt       DateTime          @default(now()) @map("created_at")
-  updatedAt       DateTime          @updatedAt @map("updated_at")
-  userGroup       UserGroup[]
-  resourceSharing ResourceSharing[]
+  id           Int            @id @default(autoincrement())
+  firstName    String         @map("first_name")
+  lastName     String         @map("last_name")
+  email        String         @unique
+  username     String         @unique
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+  userGroup    UserGroup[]
+  resourceUser ResourceUser[]
 
   @@map("user")
 }
 
 model Group {
-  id              Int               @id @default(autoincrement())
-  name            String            @unique
-  createdAt       DateTime          @default(now()) @map("created_at")
-  updatedAt       DateTime          @updatedAt @map("updated_at")
-  userGroup       UserGroup[]
-  ResourceSharing ResourceSharing[]
+  id            Int             @id @default(autoincrement())
+  name          String          @unique
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+  userGroup     UserGroup[]
+  resourceGroup ResourceGroup[]
 
   @@map("group")
 }
@@ -57,42 +57,44 @@ model UserGroup {
 }
 
 model Resource {
-  id              Int               @id @default(autoincrement())
-  name            String            @unique
-  description     String?
-  createdAt       DateTime          @default(now()) @map("created_at")
-  updatedAt       DateTime          @updatedAt @map("updated_at")
-  ResourceSharing ResourceSharing[]
+  id            Int             @id @default(autoincrement())
+  name          String          @unique
+  description   String?
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+  resourceGroup ResourceGroup[]
+  resourceUser  ResourceUser[]
 
   @@map("resource")
 }
 
-model ResourceSharing {
-  id Int @id @default(autoincrement())
+model ResourceGroup {
+  resource   Resource @relation(fields: [resourceId], references: [id])
+  resourceId Int      @map("resource_id")
 
-  resourceId Int
-  userId     Int
-  groupId    Int?
+  group   Group @relation(fields: [groupId], references: [id])
+  groupId Int   @map("group_id")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user     User     @relation(fields: [userId], references: [id])
-  group    Group?   @relation(fields: [groupId], references: [id])
-  resource Resource @relation(fields: [resourceId], references: [id])
-
-  resourceSharingScope ResourceSharingScope[]
-
-  @@unique([resourceId, userId])
-  @@map("resource_sharing")
+  @@id([resourceId, groupId])
+  @@map("resource_group")
 }
 
-model ResourceSharingScope {
-  id                   Int               @id @default(autoincrement())
-  resourceSharingId    Int
-  resourceSharingScope ResourceScopeEnum
+model ResourceUser {
+  resource   Resource @relation(fields: [resourceId], references: [id])
+  resourceId Int      @map("resource_id")
 
-  resourceSharing ResourceSharing @relation(fields: [resourceSharingId], references: [id], onDelete: Cascade)
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @map("user_id")
 
-  @@map("resource_sharing_scope")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  isIndividual Boolean @default(false) @map("is_individual")
+  isGlobal     Boolean @default(false) @map("is_global")
+
+  @@id([resourceId, userId])
+  @@map("resource_user")
 }
