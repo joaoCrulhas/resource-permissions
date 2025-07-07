@@ -1,14 +1,11 @@
-import { IController } from '../../../presentation';
-import { AddUserGroupDto, GetUsersGroupDto } from '../dtos';
-import { AddUserGroupController } from './add-user-group.controller';
+import { AddUserGroupController, AddUserGroupControllerType } from './add-user-group.controller';
 import { addUserServiceFactory, getUsersGroupServiceFactory } from '../services/services.factory';
-import { GetUserGroupController } from './get-user-group.controller';
-import { UserEntity } from '../../users/entities/user.entity';
+import { GetUserGroupController, GetUserGroupControllerType } from './get-user-group.controller';
 
-export const addUserGroupControllerFactory = (): IController<AddUserGroupDto, string> => {
+export const addUserGroupControllerFactory = (): AddUserGroupControllerType => {
   return new AddUserGroupController(addUserServiceFactory());
 };
 
-export const getUsersGroupControllerFactory = (): IController<GetUsersGroupDto, UserEntity[]> => {
+export const getUsersGroupControllerFactory = (): GetUserGroupControllerType => {
   return new GetUserGroupController(getUsersGroupServiceFactory());
 };

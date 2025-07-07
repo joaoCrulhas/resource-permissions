@@ -5,13 +5,17 @@ import { IGetResourcesByUser } from '../usecases';
 
 export type GetResourcesByUserControllerType = IController<
   GetResourcesByUserRequestDto,
-  ResourceEntity[]
+  ResourceEntity[],
+  { userId: number }
 >;
 
 export class GetResourcesByUserController implements GetResourcesByUserControllerType {
   constructor(private readonly getResourcesByUserService: IGetResourcesByUser) {}
-  async handle(request: GetResourcesByUserRequestDto): Promise<HttpResponse<ResourceEntity[]>> {
-    const response = await this.getResourcesByUserService.getResourcesByUser(request.userId);
+  async handle(
+    _request: GetResourcesByUserRequestDto,
+    params: { userId: number }
+  ): Promise<HttpResponse<ResourceEntity[]>> {
+    const response = await this.getResourcesByUserService.getResourcesByUser(Number(params.userId));
     return {
       body: response,
       statusCode: StatusCode.OK,

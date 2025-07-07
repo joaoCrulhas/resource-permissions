@@ -10,6 +10,9 @@ export default defineConfig({
       all: true,
       include: ['src/**/*.{ts,tsx,js,jsx}'],
       exclude: [
+        'src/setup/**/*',
+        'src/test/**/*',
+        'globalSetup.ts',
         'node_modules/',
         'dist/',
         '**/__tests__/**',

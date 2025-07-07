@@ -2,7 +2,8 @@ import { HttpResponse, IController, StatusCode } from '../../../presentation';
 import { AddUserGroupDto } from '../dtos';
 import { IAddUserToGroup } from '../usecases';
 
-export class AddUserGroupController implements IController<AddUserGroupDto, string> {
+export type AddUserGroupControllerType = IController<AddUserGroupDto, string>;
+export class AddUserGroupController implements AddUserGroupControllerType {
   constructor(private readonly addUserGroupService: IAddUserToGroup) {}
 
   async handle(request: AddUserGroupDto): Promise<HttpResponse<string>> {

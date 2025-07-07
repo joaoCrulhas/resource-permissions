@@ -8,14 +8,13 @@ import {
   getResourcesByUserControllerFactory,
   getUsersAccessListControllerFactory,
 } from '../controllers';
-import { errorAdapter } from '../../../errors';
 
 const RESOURCE_SHARING_ROUTES = {
   ADD_RESOURCE_GROUP: '/api/resource-sharing/group',
   ADD_RESOURCE_USER: '/api/resource-sharing/user',
   ADD_RESOURCE_GLOBAL: '/api/resource-sharing/global',
-  USERS_ACCESS_LIST: '/api/resource/:id/access-list',
-  RESOURCES_BY_USER: '/api/user/:id/resources',
+  USERS_ACCESS_LIST: '/api/resource/:resourceId/access-list',
+  RESOURCES_BY_USER: '/api/user/:userId/resources',
 } as const;
 
 export const setupResourceSharingRoutes = (fastify: FastifyInstance) => {
@@ -36,34 +35,14 @@ export const setupResourceSharingRoutes = (fastify: FastifyInstance) => {
     fastifyRouterAdapter(addResourceGlobalControllerFactory())
   );
 
-  fastify.get<{ Params: { id: number } }>(
+  fastify.get<{ Params: { resourceId: number } }>(
     RESOURCE_SHARING_ROUTES.USERS_ACCESS_LIST,
-    async (req, res) => {
-      try {
-        const controller = getUsersAccessListControllerFactory();
-        const response = await controller.handle({
-          resourceId: Number(req.params.id),
-        });
-        res.status(response.statusCode).send(response.body);
-      } catch (e: unknown) {
-        return errorAdapter(e);
-      }
-    }
+    fastifyRouterAdapter(getUsersAccessListControllerFactory())
   );
 
-  fastify.get<{ Params: { id: number } }>(
+  fastify.get<{ Params: { userId: number } }>(
     RESOURCE_SHARING_ROUTES.RESOURCES_BY_USER,
-    async (req, res) => {
-      try {
-        const controller = getResourcesByUserControllerFactory();
-        const response = await controller.handle({
-          userId: Number(req.params.id),
-        });
-        res.status(response.statusCode).send({ data: response.body });
-      } catch (e: unknown) {
-        return errorAdapter(e);
-      }
-    }
+    fastifyRouterAdapter(getResourcesByUserControllerFactory())
   );
 
   printRoutes(fastify.log, RESOURCE_SHARING_ROUTES);
