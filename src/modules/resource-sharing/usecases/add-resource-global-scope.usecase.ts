@@ -5,5 +5,5 @@ export interface IAddResourceGlobal {
    * @param resourceId The ID of the resource
    * @returns A promise that resolves when the resource is added to the global scope
    */
-  add(resourceId: number): Promise<void>;
+  add(resourceId: number): Promise<number>;
 }

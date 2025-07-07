@@ -7,6 +7,6 @@ export const addUserServiceFactory = (): IAddUserToGroup => {
   return new AddUserGroupService(membershipRepositoryFactory());
 };
 
-export const getUsersServiceFactory = (): IGetUsersGroup => {
+export const getUsersGroupServiceFactory = (): IGetUsersGroup => {
   return new GetUserGroupService(membershipRepositoryFactory());
 };
