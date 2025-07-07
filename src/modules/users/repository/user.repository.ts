@@ -8,11 +8,7 @@ export class UserRepository implements UserRepositoryType {
   constructor(private readonly prismaClient: PrismaClient) {}
 
   async fetchAll(): Promise<UserEntity[]> {
-    return this.prismaClient.user.findMany({
-      include: {
-        userGroup: {},
-      },
-    });
+    return this.prismaClient.user.findMany();
   }
 
   async create(data: CreateUserRequestDto): Promise<UserEntity> {

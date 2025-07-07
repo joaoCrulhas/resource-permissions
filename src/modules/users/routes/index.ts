@@ -20,7 +20,7 @@ export const userRoutes = (fastify: FastifyInstance) => {
       const response = await controller.handle({
         withResourcesAmount: false,
       });
-      res.status(response.statusCode).send(response.body);
+      res.status(response.statusCode).send({ data: response.body });
     } catch (e) {
       errorAdapter(e);
     }
@@ -39,7 +39,7 @@ export const userRoutes = (fastify: FastifyInstance) => {
     const response = await controller.handle({
       withResourcesAmount: true,
     });
-    res.status(response.statusCode).send(response.body);
+    res.status(response.statusCode).send({ data: response.body });
   });
 
   printRoutes(fastify.log, USER_ROUTES);
