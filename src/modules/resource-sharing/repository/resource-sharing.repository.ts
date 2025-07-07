@@ -1,9 +1,13 @@
 import { IRepository } from '../../../infra/database';
 import { AddResourceSharingArgs } from './repository.type';
-import { ResourceScopeEnum, ResourceSharingEntity } from '../entities';
+import { ResourceScopeEnum, ResourceSharingEntity, ResourceSharingScopeEntity } from '../entities';
 import { Prisma, PrismaClient } from '../../../../generated/prisma';
 
 interface IResourceSharing {
+  addScopeToResource(
+    resourceSharingId: number,
+    scope: ResourceScopeEnum
+  ): Promise<ResourceSharingScopeEntity>;
   createMany(
     usersId: number[],
     resourceId: number,
@@ -15,6 +19,11 @@ interface IResourceSharing {
     resourceId: number,
     scope: ResourceScopeEnum
   ): Promise<ResourceSharingEntity[]>;
+
+  findResourceSharingByResourceAndUser(
+    resourceId: number,
+    userId: number
+  ): Promise<ResourceSharingEntity | null>;
 }
 
 export type ResourceSharingRepositoryType = IRepository<
@@ -25,6 +34,35 @@ export type ResourceSharingRepositoryType = IRepository<
 
 export class ResourceSharingRepository implements ResourceSharingRepositoryType {
   constructor(private readonly prisma: PrismaClient) {}
+
+  async findResourceSharingByResourceAndUser(
+    resourceId: number,
+    userId: number
+  ): Promise<ResourceSharingEntity | null> {
+    const response = await this.prisma.resourceSharing.findFirst({
+      include: {
+        resourceSharingScope: true,
+      },
+      where: {
+        resourceId,
+        userId,
+      },
+    });
+    return response ? ResourceSharingEntity.fromPrisma(response) : null;
+  }
+
+  async addScopeToResource(
+    resourceSharingId: number,
+    scope: ResourceScopeEnum
+  ): Promise<ResourceSharingScopeEntity> {
+    const scopeCreated = await this.prisma.resourceSharingScope.create({
+      data: {
+        resourceSharingId,
+        resourceSharingScope: scope,
+      },
+    });
+    return ResourceSharingScopeEntity.fromPrisma(scopeCreated);
+  }
 
   async findAllByResourceByScope(
     resourceId: number,

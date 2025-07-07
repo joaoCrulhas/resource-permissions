@@ -26,11 +26,14 @@ export class ResourceSharingEntity {
   }
 
   static fromPrisma(
-    resourceSharing: ResourceSharing & { resourceSharingScope: Array<ResourceSharingScope> }
+    resourceSharing: ResourceSharing & { resourceSharingScope?: Array<ResourceSharingScope> }
   ): ResourceSharingEntity {
-    const scopes = resourceSharing.resourceSharingScope.map((element) =>
-      ResourceSharingScopeEntity.fromPrisma(element)
-    );
+    const scopes = resourceSharing.resourceSharingScope
+      ? resourceSharing.resourceSharingScope.map((element) =>
+          ResourceSharingScopeEntity.fromPrisma(element)
+        )
+      : [];
+
     return new ResourceSharingEntity(
       resourceSharing.id,
       resourceSharing.userId,

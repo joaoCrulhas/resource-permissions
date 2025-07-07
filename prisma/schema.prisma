@@ -83,6 +83,7 @@ model ResourceSharing {
 
   resourceSharingScope ResourceSharingScope[]
 
+  @@unique([resourceId, userId])
   @@map("resource_sharing")
 }
 
@@ -91,7 +92,7 @@ model ResourceSharingScope {
   resourceSharingId    Int
   resourceSharingScope ResourceScopeEnum
 
-  resourceSharing ResourceSharing @relation(fields: [resourceSharingId], references: [id])
+  resourceSharing ResourceSharing @relation(fields: [resourceSharingId], references: [id], onDelete: Cascade)
 
   @@map("resource_sharing_scope")
 }

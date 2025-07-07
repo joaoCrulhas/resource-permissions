@@ -1,7 +1,7 @@
 import { IAddResourceGlobal } from '../usecases';
 import { IGetAllUsers } from '../../users/usecases';
 import { ResourceSharingRepositoryType } from '../repository';
-import { ResourceScopeEnum } from '../entities';
+import { ResourceScopeEnum, ResourceSharingEntity } from '../entities';
 
 export class AddResourceGlobalService implements IAddResourceGlobal {
   constructor(
@@ -21,14 +21,44 @@ export class AddResourceGlobalService implements IAddResourceGlobal {
   }
 
   async add(resourceId: number): Promise<number> {
+    const resourceSharingEntity: ResourceSharingEntity[] = [];
     const usersRemaining = await this.getUsersRemaining(resourceId);
     if (usersRemaining.length === 0) {
       return 0;
     }
-    return await this.resourceSharingRepository.createMany(
-      usersRemaining,
-      resourceId,
-      ResourceScopeEnum.GLOBAL
-    );
+
+    for (const userId of usersRemaining) {
+      const isSharedWithUser =
+        await this.resourceSharingRepository.findResourceSharingByResourceAndUser(
+          resourceId,
+          userId
+        );
+      if (!isSharedWithUser) {
+        const created = await this.resourceSharingRepository.create({
+          resourceId: resourceId,
+          userId,
+          resourceSharingScope: ResourceScopeEnum.GLOBAL,
+        });
+        resourceSharingEntity.push(created);
+        continue;
+      }
+      if (
+        isSharedWithUser.resourceSharingScope.find(
+          (element) => element.resourceSharingScope === ResourceScopeEnum.GLOBAL
+        )
+      ) {
+        continue;
+      }
+
+      const createdScope = await this.resourceSharingRepository.addScopeToResource(
+        isSharedWithUser.id,
+        ResourceScopeEnum.GLOBAL
+      );
+
+      isSharedWithUser.resourceSharingScope.push(createdScope);
+      resourceSharingEntity.push(isSharedWithUser);
+    }
+
+    return resourceSharingEntity.length;
   }
 }

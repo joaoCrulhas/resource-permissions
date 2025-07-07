@@ -1,8 +1,8 @@
 import { FastifyInstance } from 'fastify';
-import { addUserGroupControllerFactory } from '../controllers';
+import { addUserGroupControllerFactory, getUsersGroupControllerFactory } from '../controllers';
 import { fastifyRouterAdapter } from '../../../presentation/fastify-router.adapter';
-import { getUsersControllerFactory } from '../../users/controllers';
 import { printRoutes } from '../../../presentation';
+import { errorAdapter } from '../../../errors';
 
 const MEMBERSHIP_ROUTES = {
   ADD_USER_GROUP: '/api/membership',
@@ -18,7 +18,17 @@ export const membershipRoutes = (fastify: FastifyInstance) => {
   );
   fastify.get<{ Params: { groupId: number } }>(
     MEMBERSHIP_ROUTES.GET_USERS_GROUP,
-    fastifyRouterAdapter(getUsersControllerFactory())
+    async (req, res) => {
+      try {
+        const controller = getUsersGroupControllerFactory();
+        const response = await controller.handle({
+          groupId: Number(req.params.groupId),
+        });
+        res.status(response.statusCode).send(response.body);
+      } catch (e) {
+        errorAdapter(e);
+      }
+    }
   );
 
   printRoutes(fastify.log, MEMBERSHIP_ROUTES);
