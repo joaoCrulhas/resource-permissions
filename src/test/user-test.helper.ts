@@ -1,5 +1,5 @@
-import { Prisma } from '@prisma-generated/client';
 import { faker } from '@faker-js/faker';
+import { Prisma } from 'generated/prisma';
 
 export class UserTestHelper {
   static createUserInputPrisma(input?: Partial<Prisma.UserCreateInput>): Prisma.UserCreateInput {

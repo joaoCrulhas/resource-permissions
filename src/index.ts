@@ -19,7 +19,7 @@ async function runServer() {
   const port = envVars.PORT;
   const prisma = PrismaSingleton.getInstance();
   try {
-    await server.listen({ port: Number(port) });
+    await server.listen({ port: Number(port), host: '0.0.0.0' });
     server.log.info(`server listening on ${port}`);
   } catch (err) {
     server.log.error(err);
