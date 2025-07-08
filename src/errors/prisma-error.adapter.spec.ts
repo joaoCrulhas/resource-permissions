@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { prismaErrorAdapter } from './prisma-error.adapter';
-import { PrismaClientKnownRequestError } from '../../generated/prisma/runtime/library';
-import { BadRequestError } from './base-errors/bad-request.error';
+import { prismaErrorAdapter } from '@errors/prisma-error.adapter';
+import { PrismaClientKnownRequestError } from 'generated/prisma/runtime/library';
+import { BadRequestError } from '@errors/base-errors/bad-request.error';
 
 export class MockPrismaClientKnownRequestError extends Error {
   code: string;

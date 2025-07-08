@@ -1,6 +1,19 @@
 import { configDefaults, defineConfig } from 'vitest/config';
+import { resolve } from 'path';
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@users': resolve(__dirname, './src/modules/users'),
+      '@membership': resolve(__dirname, './src/modules/membership'),
+      '@resource-sharing': resolve(__dirname, './src/modules/resource-sharing'),
+      '@resources': resolve(__dirname, './src/modules/resources'),
+      '@groups': resolve(__dirname, './src/modules/groups'),
+      '@presentation': resolve(__dirname, './src/presentation'),
+      '@errors': resolve(__dirname, './src/errors'),
+      '@database': resolve(__dirname, './src/infra/database'),
+    },
+  },
   test: {
     pool: 'forks',
     poolOptions: {
