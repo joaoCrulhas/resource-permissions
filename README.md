@@ -35,3 +35,8 @@ In the modules the structure is divided into the following folders:
 - `validators`: This folder contains the validators of the domain
 - `dtos`: This folder contains the dtos of the domain
 - `entities`: This folder contains the entities of the domain.
+
+
+# Api documentation
+The api documentation is available in the file `ResourceGroups.postman_collection.json`, where you can use this and 
+import in your postman.
