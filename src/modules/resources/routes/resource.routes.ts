@@ -1,8 +1,10 @@
 import { FastifyInstance } from 'fastify';
-import { createResourceControllerFactory, getAllResourcesControllerFactory } from '../controllers';
-import { fastifyPreHandlerAdapter, printRoutes } from '../../../presentation';
-import { createResourceValidatorFactory } from '../validators';
-import { fastifyRouterAdapter } from '../../../presentation/fastify-router.adapter';
+import {
+  createResourceControllerFactory,
+  getAllResourcesControllerFactory,
+} from '@resources/controllers';
+import { fastifyPreHandlerAdapter, fastifyRouterAdapter, printRoutes } from '@presentation/index';
+import { createResourceValidatorFactory } from '@resources/validators';
 
 const RESOURCE_ROUTES = {
   CREATE_RESOURCE: '/api/resource',

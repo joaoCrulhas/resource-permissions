@@ -1,9 +1,9 @@
 import { FastifyInstance } from 'fastify';
-import { userRoutes } from '../modules/users/routes';
-import { groupRoutes } from '../modules/groups/routes';
-import { membershipRoutes } from '../modules/membership/routes';
-import { resourceRoutes } from '../modules/resources/routes/resource.routes';
-import { setupResourceSharingRoutes } from '../modules/resource-sharing/routes/resource-sharing.route';
+import { membershipRoutes } from '@membership/routes/membership.route';
+import { resourceRoutes } from '@resources/routes';
+import { setupResourceSharingRoutes } from '@resource-sharing/routes';
+import { userRoutes } from '@users/routes';
+import { groupRoutes } from '@groups/routes';
 
 export const setupRoutes = (fastify: FastifyInstance) => {
   fastify.log.info(`Registering routes`);

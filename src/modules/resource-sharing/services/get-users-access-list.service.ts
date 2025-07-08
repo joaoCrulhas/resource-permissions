@@ -1,6 +1,6 @@
-import { UserEntity } from '../../users/entities/user.entity';
-import { IGetUsersAccessList } from '../usecases';
-import { ResourceSharingRepositoryType } from '../repository';
+import { UserEntity } from '@users/entities/user.entity';
+import { IGetUsersAccessList } from '@resource-sharing/usecases';
+import { ResourceSharingRepositoryType } from '@resource-sharing/repository';
 
 export class GetUsersAccessListService implements IGetUsersAccessList {
   constructor(private readonly resourceSharingRepository: ResourceSharingRepositoryType) {}

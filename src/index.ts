@@ -2,7 +2,7 @@ import fastify from 'fastify';
 
 import 'dotenv/config';
 import envVars from './config/env-vars';
-import { PrismaSingleton } from './infra/database/prisma-singleton';
+import { PrismaSingleton } from '@database/prisma-singleton';
 import { setupRoutes } from './setup/routes.setup';
 
 const server = fastify({

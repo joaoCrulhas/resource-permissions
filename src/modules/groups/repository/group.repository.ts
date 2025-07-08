@@ -1,6 +1,6 @@
-import { IRepository } from '../../../infra/database';
-import { CreateGroupRequestDto } from '../dtos';
-import { GroupEntity } from '../entities/group.entity';
+import { IRepository } from '@database/index';
+import { CreateGroupRequestDto } from '@groups/dtos';
+import { GroupEntity } from '@groups/entities';
 import { PrismaClient } from '../../../../generated/prisma';
 
 export type GroupRepositoryType = IRepository<CreateGroupRequestDto, GroupEntity>;

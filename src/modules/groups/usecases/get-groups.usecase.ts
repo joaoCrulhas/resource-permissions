@@ -1,4 +1,4 @@
-import { GroupEntity } from '../entities/group.entity';
+import { GroupEntity } from '@groups/entities';
 
 export interface IGetGroups {
   exec(): Promise<GroupEntity[]>;

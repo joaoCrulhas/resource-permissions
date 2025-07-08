@@ -1,6 +1,6 @@
-import { HttpResponse, IController, StatusCode } from '../../../presentation';
-import { GroupEntity } from '../entities/group.entity';
-import { IGetGroups } from '../usecases';
+import { HttpResponse, IController, StatusCode } from '@presentation/index';
+import { GroupEntity } from '@groups/entities/group.entity';
+import { IGetGroups } from '@groups/usecases';
 
 export class GetGroupsController implements IController<void, GroupEntity[]> {
   constructor(private readonly getGroupsService: IGetGroups) {}

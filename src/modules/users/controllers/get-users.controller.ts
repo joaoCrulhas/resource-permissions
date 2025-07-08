@@ -1,7 +1,7 @@
-import { HttpResponse, IController, StatusCode } from '../../../presentation';
-import { UserEntity } from '../entities/user.entity';
-import { IGetUsers } from '../usecases';
-import { GetUsersRequestDto } from '../dtos';
+import { HttpResponse, IController, StatusCode } from '@presentation/index';
+import { UserEntity } from '@users/entities';
+import { IGetUsers } from '@users/usecases';
+import { GetUsersRequestDto } from '@users/dtos';
 
 export type GetUsersControllerType = IController<GetUsersRequestDto, UserEntity[]>;
 export class GetUsersController implements GetUsersControllerType {

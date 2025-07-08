@@ -1,6 +1,6 @@
-import { ResourceEntity } from '../../resources/entities';
-import { IGetResourcesByUser } from '../usecases';
-import { ResourceSharingRepositoryType } from '../repository';
+import { ResourceEntity } from '@resources/entities';
+import { IGetResourcesByUser } from '@resource-sharing/usecases';
+import { ResourceSharingRepositoryType } from '@resource-sharing/repository';
 
 export class GetResourcesByUserService implements IGetResourcesByUser {
   constructor(private readonly resourceSharingRepository: ResourceSharingRepositoryType) {}

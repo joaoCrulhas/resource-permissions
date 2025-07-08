@@ -1,5 +1,5 @@
 import { IController } from '../../../presentation';
-import { GroupEntity } from '../entities/group.entity';
+import { GroupEntity } from '@groups/entities';
 import { GetGroupsController } from './get-groups.controller';
 import { createGroupServiceFactory, getGroupsServiceFactory } from '../services';
 import { CreateGroupController } from './create-group.controller';

@@ -1,5 +1,5 @@
-import { ResourceEntity } from '../../resources/entities';
-import { GroupEntity } from '../../groups/entities/group.entity';
+import { ResourceEntity } from '@resources/entities';
+import { GroupEntity } from '@groups/entities';
 import { Group, Resource } from '../../../../generated/prisma';
 
 export class ResourceGroupEntity {

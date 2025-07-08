@@ -1,7 +1,7 @@
-import { ResourceGlobalEntity } from '../entities';
-import { ResourceSharingRepositoryType } from '../repository';
-import { AddResourceGlobalArgs, IAddResourceGlobal } from '../usecases/add-resource-global.usecase';
-import { IGetUsers } from '../../users/usecases';
+import { ResourceGlobalEntity } from '@resource-sharing/entities';
+import { ResourceSharingRepositoryType } from '@resource-sharing/repository';
+import { AddResourceGlobalArgs, IAddResourceGlobal } from '@resource-sharing/usecases';
+import { IGetUsers } from '@users/usecases';
 
 export class AddResourceGlobalService implements IAddResourceGlobal {
   constructor(

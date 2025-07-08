@@ -1,8 +1,8 @@
 import { PrismaClient } from '../../../../generated/prisma';
 import { IRepository } from '../../../infra/database';
 import { ResourceGroupEntity, ResourceUserEntity } from '../entities';
-import { UserEntity } from '../../users/entities/user.entity';
-import { ResourceEntity } from '../../resources/entities';
+import { UserEntity } from '@users/entities';
+import { ResourceEntity } from '@resources/entities';
 
 export type ResourceResponse = ResourceGroupEntity | ResourceUserEntity;
 

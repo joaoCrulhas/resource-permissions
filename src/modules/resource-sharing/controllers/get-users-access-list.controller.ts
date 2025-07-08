@@ -1,7 +1,7 @@
 import { HttpResponse, IController, StatusCode } from '../../../presentation';
 import { IGetUsersAccessList } from '../usecases';
 import { GetUsersAccessListRequestDto } from '../dtos';
-import { UserEntity } from '../../users/entities/user.entity';
+import { UserEntity } from '@users/entities/user.entity';
 
 export type GetUsersAccessListControllerType = IController<
   GetUsersAccessListRequestDto,

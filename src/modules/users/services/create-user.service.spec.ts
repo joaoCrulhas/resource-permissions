@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
-import { CreateUserService } from './create-user.service';
-import { UserEntity } from '../entities/user.entity';
+import { CreateUserService } from '@users/services';
+import { UserEntity } from '@users/entities';
 import { IRepository } from '../../../infra/database';
-import { UserRepositoryType } from '../repository';
+import { UserRepositoryType } from '@users/repository';
 import { UserTestHelper } from '../../../test/user-test.helper';
 
 type SutTypes = {

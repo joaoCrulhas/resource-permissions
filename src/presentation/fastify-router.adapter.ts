@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { IController } from './controller.interface';
-import { errorAdapter } from '../errors';
+import { IController } from '@presentation/index';
+import { errorAdapter } from '@errors/index';
 
 export const fastifyRouterAdapter = <T = unknown, R = unknown, P = unknown>(
   controller: IController<T, R>

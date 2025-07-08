@@ -1,7 +1,7 @@
 import { IRepository } from '../../../infra/database';
-import { UserEntity } from '../entities/user.entity';
+import { UserEntity } from '@users/entities';
 import { PrismaClient } from '../../../../generated/prisma';
-import { CreateUserRequestDto } from '../dtos';
+import { CreateUserRequestDto } from '@users/dtos';
 
 export type UserRepositoryType = IRepository<CreateUserRequestDto, UserEntity>;
 export class UserRepository implements UserRepositoryType {

@@ -1,4 +1,4 @@
-import { UserEntity } from '../../users/entities/user.entity';
+import { UserEntity } from '@users/entities/user.entity';
 import { IGetUsersGroup } from '../usecases';
 import { MembershipRepositoryType } from '../repository';
 

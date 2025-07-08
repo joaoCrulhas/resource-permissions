@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
-import { printRoutes } from '../../../presentation';
-import { fastifyRouterAdapter } from '../../../presentation/fastify-router.adapter';
+import { printRoutes } from '@presentation/index';
+import { fastifyRouterAdapter } from '@presentation/fastify-router.adapter';
 import {
   addResourceGlobalControllerFactory,
   addResourceGroupControllerFactory,

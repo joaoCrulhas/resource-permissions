@@ -1,7 +1,7 @@
-import { UserEntity } from '../entities/user.entity';
-import { IGetUsers } from '../usecases';
-import { UserRepositoryType } from '../repository';
-import { IGetResourcesByUser } from '../../resource-sharing/usecases';
+import { UserEntity } from '@users/entities';
+import { IGetUsers } from '@users/usecases';
+import { UserRepositoryType } from '@users/repository';
+import { IGetResourcesByUser } from '@resource-sharing/usecases';
 
 export class GetUsersService implements IGetUsers {
   constructor(

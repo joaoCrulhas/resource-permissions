@@ -1,8 +1,7 @@
 import { FastifyInstance } from 'fastify';
-import { fastifyPreHandlerAdapter, printRoutes } from '../../../presentation';
-import { createGroupControllerFactory, getGroupsControllerFactory } from '../controllers';
-import { groupValidatorsFactory } from '../validators';
-import { fastifyRouterAdapter } from '../../../presentation/fastify-router.adapter';
+import { createGroupControllerFactory, getGroupsControllerFactory } from '@groups/controllers';
+import { groupValidatorsFactory } from '@groups/validators';
+import { fastifyPreHandlerAdapter, fastifyRouterAdapter, printRoutes } from '@presentation/index';
 
 const GROUP_ROUTES = {
   GET_GROUPS: '/api/group',

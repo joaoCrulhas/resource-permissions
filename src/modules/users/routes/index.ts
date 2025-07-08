@@ -1,8 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest, HookHandlerDoneFunction } from 'fastify';
-import { createUserControllerFactory, getUsersControllerFactory } from '../controllers';
-import { createUserValidatorFactory } from '../validators/create-user-validator.factory';
-import { fastifyPreHandlerAdapter, printRoutes } from '../../../presentation';
-import { fastifyRouterAdapter } from '../../../presentation/fastify-router.adapter';
+import { createUserControllerFactory, getUsersControllerFactory } from '@users/controllers';
+import { createUserValidatorFactory } from '@users/validators';
+import { fastifyPreHandlerAdapter, fastifyRouterAdapter, printRoutes } from '@presentation/index';
 
 const USER_ROUTES = {
   GET_USERS: '/api/user',

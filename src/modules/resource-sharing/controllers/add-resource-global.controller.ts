@@ -1,7 +1,7 @@
 import { HttpResponse, IController, StatusCode } from '../../../presentation';
-import { AddResourceGlobalRequestDto } from '../dtos';
-import { ResourceGlobalEntity } from '../entities';
-import { IAddResourceGlobal } from '../usecases/add-resource-global.usecase';
+import { AddResourceGlobalRequestDto } from '@resource-sharing/dtos';
+import { ResourceGlobalEntity } from '@resource-sharing/entities';
+import { IAddResourceGlobal } from '@resource-sharing/usecases';
 
 export type AddResourceGlobalControllerType = IController<
   AddResourceGlobalRequestDto,

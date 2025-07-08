@@ -1,6 +1,6 @@
-import { GroupEntity } from '../entities/group.entity';
-import { GroupRepositoryType } from '../repository';
-import { IGetGroups } from '../usecases';
+import { GroupEntity } from '@groups/entities';
+import { GroupRepositoryType } from '@groups/repository';
+import { IGetGroups } from '@groups/usecases';
 
 export class GetGroupsService implements IGetGroups {
   constructor(private readonly groupRepository: GroupRepositoryType) {}

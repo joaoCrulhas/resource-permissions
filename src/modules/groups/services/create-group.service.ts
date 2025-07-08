@@ -1,7 +1,7 @@
-import { CreateGroupRequestDto } from '../dtos';
-import { GroupEntity } from '../entities/group.entity';
-import { GroupRepositoryType } from '../repository';
-import { ICreateGroup } from '../usecases';
+import { CreateGroupRequestDto } from '@groups/dtos';
+import { GroupEntity } from '@groups/entities';
+import { GroupRepositoryType } from '@groups/repository';
+import { ICreateGroup } from '@groups/usecases';
 
 export class CreateGroupService implements ICreateGroup {
   constructor(private readonly groupRepository: GroupRepositoryType) {}

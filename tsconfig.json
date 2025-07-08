@@ -12,7 +12,17 @@
     "forceConsistentCasingInFileNames": true,
 
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@users/*": ["src/modules/users/*"],
+      "@membership/*": ["src/modules/membership/*"],
+      "@resource-sharing/*": ["src/modules/resource-sharing/*"],
+      "@resources/*": ["src/modules/resources/*"],
+      "@groups/*": ["src/modules/groups/*"],
+      "@presentation/*": ["src/presentation/*"],
+      "@database/*": ["src/infra/database/*"],
+      "@config/*": ["src/config/*"],
+      "@errors/*": ["src/errors/*"],
+    }
   },
   "include": [
     "src/**/*.ts",

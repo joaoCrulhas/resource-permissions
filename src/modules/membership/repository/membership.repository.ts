@@ -1,7 +1,7 @@
 import { PrismaClient } from '../../../../generated/prisma';
 import { IRepository } from '../../../infra/database';
 import { AddUserGroupDto } from '../dtos';
-import { UserEntity } from '../../users/entities/user.entity';
+import { UserEntity } from '@users/entities';
 
 interface IMembershipRepository {
   getUsersByGroupId(groupId: number): Promise<UserEntity[]>;

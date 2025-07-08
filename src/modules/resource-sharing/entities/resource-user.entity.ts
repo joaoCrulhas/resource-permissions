@@ -1,6 +1,6 @@
-import { ResourceEntity } from '../../resources/entities';
+import { ResourceEntity } from '@resources/entities';
 import { Resource, User } from '../../../../generated/prisma';
-import { UserEntity } from '../../users/entities/user.entity';
+import { UserEntity } from '@users/entities';
 
 export class ResourceUserEntity {
   resource: ResourceEntity;

@@ -1,7 +1,9 @@
 import { FastifyInstance } from 'fastify';
-import { addUserGroupControllerFactory, getUsersGroupControllerFactory } from '../controllers';
-import { fastifyRouterAdapter } from '../../../presentation/fastify-router.adapter';
-import { printRoutes } from '../../../presentation';
+import {
+  addUserGroupControllerFactory,
+  getUsersGroupControllerFactory,
+} from '@membership/controllers';
+import { fastifyRouterAdapter, printRoutes } from '@presentation/index';
 
 const MEMBERSHIP_ROUTES = {
   ADD_USER_GROUP: '/api/membership',

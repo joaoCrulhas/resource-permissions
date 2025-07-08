@@ -1,7 +1,7 @@
-import { ICreateUser } from '../usecases';
-import { UserEntity } from '../entities/user.entity';
-import { CreateUserRequestDto } from '../dtos';
-import { UserRepositoryType } from '../repository';
+import { ICreateUser } from '@users/usecases';
+import { UserEntity } from '@users/entities';
+import { CreateUserRequestDto } from '@users/dtos';
+import { UserRepositoryType } from '@users/repository';
 
 export class CreateUserService implements ICreateUser {
   constructor(private readonly userRepository: UserRepositoryType) {}

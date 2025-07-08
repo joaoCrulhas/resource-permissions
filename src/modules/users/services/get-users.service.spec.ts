@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { GetUsersService } from './get-users.service';
-import { IGetResourcesByUser } from '../../resource-sharing/usecases';
+import { IGetResourcesByUser } from '@resource-sharing/usecases';
 import { userRepositoryFactory, UserRepositoryType } from '../repository';
 
 describe('GetUsersService', () => {
@@ -23,7 +23,7 @@ describe('GetUsersService', () => {
 
   it('should not call the getResourcesByUserMock if withResourcesAmount is false', async () => {
     const aSpy = vi.spyOn(getResourcesByUserMock, 'exec');
-    const received = await sut.exec(false);
+    await sut.exec(false);
     expect(aSpy).not.toHaveBeenCalled();
   });
 });

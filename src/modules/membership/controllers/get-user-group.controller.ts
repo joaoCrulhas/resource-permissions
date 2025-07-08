@@ -1,6 +1,6 @@
 import { HttpResponse, IController, StatusCode } from '../../../presentation';
 import { GetUsersByGroupParams, GetUsersGroupDto } from '../dtos';
-import { UserEntity } from '../../users/entities/user.entity';
+import { UserEntity } from '@users/entities/user.entity';
 import { IGetUsersGroup } from '../usecases';
 
 export type GetUserGroupControllerType = IController<
