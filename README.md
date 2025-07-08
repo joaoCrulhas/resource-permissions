@@ -13,6 +13,8 @@ Another way to run this is using the docker image created:
 1. Go to the docker-compose.yaml file
 2. Run `docker compose up`
 
+In the docker image the seeders are not executed
+
 # Project structure
 
 The project structure is divided into the following folders:
