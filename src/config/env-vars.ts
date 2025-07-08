@@ -1,15 +1,4 @@
-interface EnvVariable {
-  PORT: number;
-}
-type EnvVariableKeys = keyof EnvVariable;
-
-export const getEnvVar = (key: EnvVariableKeys): string => {
-  const value = process.env[key];
-  if (!value) {
-    throw new Error(`Missing environment variable: ${key}`);
-  }
-  return value;
-};
+import { EnvVariable, getEnvVar } from '@config/get-env-vars';
 
 const envVars: EnvVariable = {
   PORT: Number(getEnvVar('PORT')) || 3005,

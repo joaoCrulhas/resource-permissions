@@ -2,6 +2,8 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { GetUsersService } from './get-users.service';
 import { IGetResourcesByUser } from '@resource-sharing/usecases';
 import { userRepositoryFactory, UserRepositoryType } from '../repository';
+import { ResourceEntity } from '@resources/entities';
+import { ResourceTestHelper } from '../../../test';
 
 describe('GetUsersService', () => {
   let sut: GetUsersService;
@@ -25,5 +27,13 @@ describe('GetUsersService', () => {
     const aSpy = vi.spyOn(getResourcesByUserMock, 'exec');
     await sut.exec(false);
     expect(aSpy).not.toHaveBeenCalled();
+  });
+
+  it('should call the getResourcesByUserService if the withResourcesAmount is true', async () => {
+    const aSpy = vi.spyOn(getResourcesByUserMock, 'exec');
+    const mockedSpyReturn: ResourceEntity[] = [ResourceTestHelper.createMockedResource()];
+    aSpy.mockResolvedValue(mockedSpyReturn);
+    await sut.exec(true);
+    expect(aSpy).toHaveBeenCalled();
   });
 });

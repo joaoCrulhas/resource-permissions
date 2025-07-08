@@ -4,6 +4,7 @@ import { resolve } from 'path';
 export default defineConfig({
   resolve: {
     alias: {
+      '@config': resolve(__dirname, './src/config'),
       '@users': resolve(__dirname, './src/modules/users'),
       '@membership': resolve(__dirname, './src/modules/membership'),
       '@resource-sharing': resolve(__dirname, './src/modules/resource-sharing'),

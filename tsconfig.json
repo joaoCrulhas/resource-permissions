@@ -21,12 +21,13 @@
       "@presentation/*": ["src/presentation/*"],
       "@database/*": ["src/infra/database/*"],
       "@config/*": ["src/config/*"],
-      "@errors/*": ["src/errors/*"],
+      "@errors/*": ["src/errors/*"]
     }
   },
   "include": [
     "src/**/*.ts",
-    "generated/prisma/**/*.d.ts"
+    "generated/prisma/**/*.d.ts",
+    "node_modules/vitest/globals.d.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

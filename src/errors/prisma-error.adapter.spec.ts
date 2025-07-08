@@ -16,6 +16,16 @@ export class MockPrismaClientKnownRequestError extends Error {
 }
 
 describe('prismaErrorAdapter', () => {
+  it('should return the generic message if target is not provided', () => {
+    const error = new MockPrismaClientKnownRequestError('Unique constraint failed', 'P2002', {});
+    expect(() => prismaErrorAdapter(error as PrismaClientKnownRequestError)).toThrow(
+      BadRequestError
+    );
+    expect(() => prismaErrorAdapter(error as PrismaClientKnownRequestError)).toThrow(
+      'Unique constraint violation'
+    );
+  });
+
   it('should throw BadRequestError for P2002 with array target', () => {
     const error = new MockPrismaClientKnownRequestError('Unique constraint failed', 'P2002', {
       target: ['email', 'username'],

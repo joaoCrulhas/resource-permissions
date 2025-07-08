@@ -4,8 +4,8 @@ import { BadRequestError } from './base-errors/bad-request.error';
 export const prismaErrorAdapter = (error: PrismaClientKnownRequestError) => {
   switch (error.code) {
     case 'P2002': {
-      let target = error.meta?.target as Array<string>;
-      target = target?.length > 0 && target ? target : [error.meta?.target as string];
+      let target: string[] | null = (error.meta?.target as Array<string>) ?? [];
+      target = target?.length > 0 && target ? target : null;
       const fieldMessage = target
         ? `Unique constraint failed on the field(s): ${target}`
         : 'Unique constraint violation';

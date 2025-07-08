@@ -1,4 +1,4 @@
-import { HttpResponse, IController, StatusCode } from '../../../presentation';
+import { HttpResponse, IController, StatusCode } from '@presentation/index';
 import { CreateUserRequestDto } from '@users/dtos';
 import { UserEntity } from '@users/entities';
 import { ICreateUser } from '@users/usecases';
