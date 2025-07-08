@@ -1,13 +1,14 @@
 import { PrismaClient } from '../../../../generated/prisma';
 import { IRepository } from '../../../infra/database';
-import { AddUserGroupDto } from '../dtos';
 import { UserEntity } from '@users/entities';
+import { AddUserGroupDto, AddUserGroupResponseDto } from '@membership/dtos';
 
 interface IMembershipRepository {
   getUsersByGroupId(groupId: number): Promise<UserEntity[]>;
 }
 
-export type MembershipRepositoryType = IRepository<AddUserGroupDto, void> & IMembershipRepository;
+export type MembershipRepositoryType = IRepository<AddUserGroupDto, AddUserGroupResponseDto> &
+  IMembershipRepository;
 export class MembershipRepository implements MembershipRepositoryType {
   constructor(private readonly prisma: PrismaClient) {}
 
@@ -23,8 +24,12 @@ export class MembershipRepository implements MembershipRepositoryType {
     return usersGroup.map((element) => element.user);
   }
 
-  async create(data: AddUserGroupDto): Promise<void> {
-    await this.prisma.userGroup.create({
+  async create(data: AddUserGroupDto): Promise<AddUserGroupResponseDto> {
+    const membershipCreated = await this.prisma.userGroup.create({
+      include: {
+        user: true,
+        group: true,
+      },
       data: {
         group: {
           connect: {
@@ -38,8 +43,9 @@ export class MembershipRepository implements MembershipRepositoryType {
         },
       },
     });
+    return AddUserGroupResponseDto.fromPrisma(membershipCreated.user, membershipCreated.group);
   }
-  fetchAll(): Promise<void[]> {
+  fetchAll(): Promise<AddUserGroupResponseDto[]> {
     throw new Error('Method not implemented.');
   }
 }
