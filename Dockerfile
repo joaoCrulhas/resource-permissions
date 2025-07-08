@@ -12,7 +12,7 @@ COPY tsconfig.json ./
 
 RUN npx prisma generate
 
-RUN npm run build # Isso cria a pasta 'dist'
+RUN npm run build
 
 FROM node:22-alpine
 

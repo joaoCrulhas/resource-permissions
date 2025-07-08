@@ -6,7 +6,8 @@ This repository contains a project that allows you to manage access to resources
 
 There are two ways to run it, to run locally:
 1. `npm install`
-2. `npm run setup:run:dev` -> This command will create the database, run the migrations, create a prisma client and run the serve
+2. `npm run setup:run:dev` -> This command will create the database, run the migrations, create a prisma client and 
+   run the serve, with some seeders.
 
 Another way to run this is using the docker image created:
 1. Go to the docker-compose.yaml file
