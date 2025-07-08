@@ -1,0 +1,395 @@
+{
+	"info": {
+		"_postman_id": "dc3699b1-1c08-4ac3-8d36-934671f81148",
+		"name": "ResourceGroups",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2126830"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{$randomFirstName}}\",\n    \"lastName\": \"{{$randomLastName}}\",\n    \"username\": \"{{$randomUserName}}\",\n    \"email\": \"{{$randomEmail}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/{{userApi}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{userApi}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get users with amount resource",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/{{userApi}}/with-resource-count",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{userApi}}",
+								"with-resource-count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Resources by user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/{{userApi}}/1/resources",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{userApi}}",
+								"1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "groups",
+			"item": [
+				{
+					"name": "Get all groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/{{groupApi}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{groupApi}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"{{$randomCity}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{groupApi}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{groupApi}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "membership",
+			"item": [
+				{
+					"name": "Add user to a group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 2,\n    \"groupId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{membershipApi}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{membershipApi}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get users by group",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/{{membershipApi}}/{{groupId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{membershipApi}}",
+								"{{groupId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "resources",
+			"item": [
+				{
+					"name": "Create a new resource",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomBsNoun}}_{{$randomAdjective}}\",\n    \"description\": \"This is a test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{resourceApi}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{resourceApi}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Resource access list by resource Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/{{resourceApi}}/{{resourceId}}/access-list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{resourceApi}}",
+								"{{resourceId}}",
+								"access-list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "resource-sharing",
+			"item": [
+				{
+					"name": "Share resource globally",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"resourceId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{resourceSharingApi}}/global",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{resourceSharingApi}}",
+								"global"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Share resource individual",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"resourceId\": 1,\n    \"userId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{resourceSharingApi}}/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{resourceSharingApi}}",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Share resource group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"resourceId\": 1,\n    \"groupId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/{{resourceSharingApi}}/group",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{resourceSharingApi}}",
+								"group"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/health",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "userApi",
+			"value": "api/user",
+			"type": "string"
+		},
+		{
+			"key": "groupApi",
+			"value": "api/group",
+			"type": "string"
+		},
+		{
+			"key": "membershipApi",
+			"value": "api/membership",
+			"type": "string"
+		},
+		{
+			"key": "resourceApi",
+			"value": "api/resource",
+			"type": "string"
+		},
+		{
+			"key": "resourceSharingApi",
+			"value": "api/resource-sharing",
+			"type": "string"
+		}
+	]
+}

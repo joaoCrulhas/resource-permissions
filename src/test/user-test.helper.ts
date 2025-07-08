@@ -3,7 +3,7 @@ import { Prisma } from 'generated/prisma';
 import { UserEntity } from '@users/entities';
 
 export class UserTestHelper {
-  static createUserEntityMocked(input: Partial<UserEntity>): UserEntity {
+  static createUserEntityMocked(input?: Partial<UserEntity>): UserEntity {
     const fName = input?.firstName ?? faker.person.firstName();
     const lName = input?.lastName ?? faker.person.lastName();
     const uName =
